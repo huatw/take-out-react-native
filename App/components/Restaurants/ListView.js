@@ -3,6 +3,8 @@ import { FlatList, View, StyleSheet } from 'react-native'
 import { ListItem, Icon, Badge } from 'react-native-elements'
 import { withNavigation } from 'react-navigation'
 
+import { IMAGE_URL } from '../../config'
+
 @withNavigation
 class ListView extends PureComponent {
   state = { isRefreshing: true }
@@ -35,7 +37,7 @@ class ListView extends PureComponent {
               subtitle={item.cuisine}
               subtitleStyle={styles.subtitle}
               leftAvatar={{
-                source: { uri: item.thumbnail },
+                source: { uri: `${IMAGE_URL}${item.thumbnail}` },
                 large: true,
                 rounded: false,
                 containerStyle: { margin: 15 },

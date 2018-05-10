@@ -3,6 +3,7 @@ import { SafeAreaView, View, StyleSheet } from 'react-native'
 import { ListItem, Text, Badge } from 'react-native-elements'
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 
+import { IMAGE_URL } from '../../config'
 import { consume } from '../../stores'
 import withLoader from '../../hoc/withLoader'
 
@@ -10,7 +11,7 @@ import ListFoods from './ListFoods'
 import ListRatings from './ListRatings'
 
 @consume(
-  ['restaurant', 'cart'],
+  ['session', 'restaurant', 'cart'],
   ['restaurantActions', 'cartActions']
 )
 @withLoader(({ navigation, restaurant }) =>
@@ -41,6 +42,15 @@ class Restaurant extends PureComponent {
     await issaved ? unsave(id) : save(id)
   }
 
+  contact = () => {
+    const {
+      navigation,
+      restaurant
+    } = this.props
+
+    navigation.navigate('Contact')
+  }
+
   renderHeader = () => {
     const { restaurant } = this.props
 
@@ -62,19 +72,22 @@ class Restaurant extends PureComponent {
                 }
                 rightElement={
                   <View style={styles.badges}>
-                    <Badge value={saveBadge}
-                           onPress={this.toggleSave}
-                    />
                     <Badge value={`Rating ${restaurant.avgrating}`}
                            containerStyle={styles.badge}
                     />
                     <Badge value={`$ ${restaurant.avgprice}`}
                            containerStyle={styles.badge}
                     />
+                    <Badge value={saveBadge}
+                           onPress={this.toggleSave}
+                    />
+                    <Badge value="Contact"
+                           onPress={this.contact}
+                    />
                   </View>
                 }
                 leftAvatar={{
-                  source: { uri: restaurant.thumbnail },
+                  source: { uri: `${IMAGE_URL}${restaurant.thumbnail}` },
                   large: true,
                   rounded: true,
                   containerStyle: { margin: 15 },
@@ -106,6 +119,7 @@ class Restaurant extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 20
   },
   title: {
     fontWeight: 'bold',
@@ -113,7 +127,7 @@ const styles = StyleSheet.create({
     marginLeft: 4
   },
   badges: {
-    minHeight: 75,
+    minHeight: 100,
     alignItems: 'center',
     justifyContent: 'space-between'
   },

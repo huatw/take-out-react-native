@@ -4,6 +4,7 @@ import { ListItem, Icon } from 'react-native-elements'
 
 import requireAuth from '../../hoc/requireAuth'
 import { consume } from '../../stores'
+import { IMAGE_URL } from '../../config'
 
 @consume(
   ({ session, restaurants }) => ({ session, restaurants: restaurants.saved }),
@@ -46,7 +47,7 @@ class Saved extends PureComponent {
               subtitle={item.cuisine}
               subtitleStyle={styles.subtitle}
               leftAvatar={{
-                source: { uri: item.thumbnail },
+                source: { uri: `${IMAGE_URL}${item.thumbnail}` },
                 large: true,
                 rounded: false,
                 containerStyle: { margin: 15 },

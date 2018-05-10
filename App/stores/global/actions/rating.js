@@ -1,7 +1,9 @@
 import { ratingAPI } from '../graphql'
 
 const fetchByRestaurant = (id) => async ({ restaurant }) => {
-  const { restaurantRatings: ratings } = await ratingAPI.fetchByRestaurant({ id })
+  const {
+    restaurantRatings: ratings
+  } = await ratingAPI.fetchByRestaurant({ id })
 
   return {
     restaurant: {

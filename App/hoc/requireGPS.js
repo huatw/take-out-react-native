@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { NetInfo, SafeAreaView, View, StyleSheet } from 'react-native'
+import { SafeAreaView, NetInfo, View, StyleSheet } from 'react-native'
 import { Icon, Text, Button } from 'react-native-elements'
 
 const requireGPS = (propMapper, actionMapper) => Wrapped => class extends PureComponent {
@@ -44,6 +44,7 @@ const requireGPS = (propMapper, actionMapper) => Wrapped => class extends PureCo
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center'
   },

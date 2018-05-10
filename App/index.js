@@ -15,6 +15,7 @@ import Setting from './components/Profile/Setting'
 import UpdateProfile from './components/Profile/UpdateProfile'
 import Restaurant from './components/Restaurant'
 import CheckOut from './components/Restaurant/CheckOut'
+import Contact from './components/Restaurant/Contact'
 import Order from './components/Orders/Order'
 import Auth from './components/Auth'
 
@@ -108,6 +109,13 @@ const MainStack = StackNavigator({
     path: '/checkout',
     navigationOptions: {
       title: 'Check Out'
+    }
+  },
+  Contact: {
+    screen: Contact,
+    path: '/contact',
+    navigationOptions: {
+      title: 'Contact'
     }
   },
   Order: {

@@ -3,6 +3,7 @@ import { FlatList, SectionList, View, StyleSheet } from 'react-native'
 import { Button, Text, ListItem, Icon } from 'react-native-elements'
 import { withNavigation } from 'react-navigation'
 
+import { IMAGE_URL } from '../../config'
 import { consume } from '../../stores'
 
 @withNavigation
@@ -56,7 +57,7 @@ class ListFoods extends PureComponent {
                 titleStyle={styles.rightTitle}
                 subtitle={`$ ${item.price}`}
                 leftAvatar={{
-                  source: { uri: item.thumbnail },
+                  source: { uri: `${IMAGE_URL}${item.thumbnail}` },
                   medium: true,
                   rounded: false,
                   overlayContainerStyle: { backgroundColor: 'white' }
@@ -66,6 +67,7 @@ class ListFoods extends PureComponent {
                   <View style={styles.rightCartOp}>
                     {quantity &&
                       <Icon name="remove-circle"
+                            containerStyle={styles.biggerIcon}
                             onPress={() => this.decToCart(item)}
                       />
                     }
@@ -75,6 +77,7 @@ class ListFoods extends PureComponent {
                       </Text>
                     }
                     <Icon name="add-circle"
+                          containerStyle={styles.biggerIcon}
                           onPress={() => this.incToCart(item)}
                     />
                   </View>
@@ -190,7 +193,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   bodyLeft: {
-    maxWidth: 100
+    maxWidth: 70
   },
   leftTitle: {
     color: 'black',
@@ -221,7 +224,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   rightQuantity: {
-    marginHorizontal: 5,
+    // marginHorizontal: 5,
   },
   footer: {
     flexDirection: 'row',
@@ -235,6 +238,9 @@ const styles = StyleSheet.create({
   footerTitle: {
     color: 'white'
   },
+  biggerIcon: {
+    padding: 8
+  }
 })
 
 export default ListFoods

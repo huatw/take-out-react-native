@@ -3,6 +3,7 @@ import { SafeAreaView, ScrollView, FlatList, View, StyleSheet, Alert } from 'rea
 import { ListItem, Button, Input, Icon } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 
+import { IMAGE_URL } from '../../config'
 import { consume } from '../../stores'
 import requireAuth from '../../hoc/requireAuth'
 
@@ -57,7 +58,7 @@ class CheckOut extends PureComponent {
               rightTitle={`$ ${food.price * quantity}`}
               rightSubtitle={`x ${quantity}`}
               leftAvatar={{
-                source: { uri: food.thumbnail },
+                source: { uri: `${IMAGE_URL}${food.thumbnail}` },
                 medium: true,
                 rounded: false,
                 overlayContainerStyle: { backgroundColor: 'white' }
@@ -75,7 +76,7 @@ class CheckOut extends PureComponent {
     const data = Object.values(foods)
 
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.container}>
         <ScrollView>
           <FlatList data={data}
                     renderItem={this.renderItem}
@@ -112,6 +113,10 @@ class CheckOut extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 20
+  },
   title: {
     fontWeight: 'bold',
     fontSize: 18

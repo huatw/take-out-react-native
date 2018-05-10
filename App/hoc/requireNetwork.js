@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
-import { NetInfo, SafeAreaView, View, StyleSheet } from 'react-native'
+import { SafeAreaView, NetInfo, View, StyleSheet } from 'react-native'
 import { Icon, Text, Button } from 'react-native-elements'
-
 
 /* NetInfo API is buggy on IOS... */
 const requireNetwork = Wrapped => class extends PureComponent {
@@ -42,6 +41,7 @@ const requireNetwork = Wrapped => class extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center'
   },

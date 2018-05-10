@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { SafeAreaView, View, StyleSheet, Alert } from 'react-native'
+import { View, StyleSheet, Alert } from 'react-native'
 import { Icon, Text, Input, Button } from 'react-native-elements'
 
 import { consume } from '../../stores'

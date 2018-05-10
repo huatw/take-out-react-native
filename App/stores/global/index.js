@@ -43,7 +43,8 @@ const initialState = {
   food: {}, // food detail page
   orderSearch: [],
   orders: [],
-  order: {}
+  order: {},
+  contacts: {}
 }
 
 const store = createStore({

@@ -1,7 +1,8 @@
-const fetch = `
+const fetchByRestaurant = `
   query ($id: ID!) {
     restaurantRatings (id: $id) {
       id
+      nickname
       content
       createtime
       stars
@@ -10,5 +11,5 @@ const fetch = `
 `
 
 export default {
-  fetch
+  fetchByRestaurant
 }

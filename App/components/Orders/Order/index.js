@@ -1,10 +1,13 @@
 import React, { PureComponent } from 'react'
 import { SafeAreaView, ScrollView, FlatList, View, StyleSheet, Alert } from 'react-native'
-import { ListItem, Button, Input, Icon } from 'react-native-elements'
+import { ListItem, Button, Input, Icon, Rating } from 'react-native-elements'
+import { withNavigation } from 'react-navigation'
 
 import { consume } from '../../../stores'
 import withLoader from '../../../hoc/withLoader'
+import { IMAGE_URL } from '../../../config'
 
+@withNavigation
 @consume('order', 'orderActions')
 @withLoader(({ navigation, order }) =>
   order.id === navigation.getParam('order')
@@ -12,13 +15,39 @@ import withLoader from '../../../hoc/withLoader'
 class Order extends PureComponent {
   state = {
     isLoading: false,
+    isCanceling: false,
     comment: '',
-    stars: ''
+    stars: 5
   }
 
   componentDidMount () {
     const id = this.props.navigation.getParam('order')
     this.props.orderActions.fetch(id)
+  }
+
+  cancel = async () => {
+    const {
+      order,
+      orderActions,
+      navigation
+    } = this.props
+
+    this.setState({ isCanceling: true })
+
+    try {
+      await orderActions.cancel(order.id)
+
+      navigation.pop()
+    } catch (e) {
+      console.log(e)
+      this.setState({ isCanceling: false })
+
+      Alert.alert(
+        'canceling Order failed',
+        'You should not see this message...',
+        [{ text: 'OK' }]
+      )
+    }
   }
 
   rate = async () => {
@@ -58,7 +87,7 @@ class Order extends PureComponent {
               rightTitle={`$ ${food.price * quantity}`}
               rightSubtitle={`x ${quantity}`}
               leftAvatar={{
-                source: { uri: food.thumbnail },
+                source: { uri: `${IMAGE_URL}${food.thumbnail}` },
                 medium: true,
                 rounded: false,
                 overlayContainerStyle: { backgroundColor: 'white' }
@@ -78,7 +107,6 @@ class Order extends PureComponent {
                            editable={false}
                     />
                   }
-                  containerStyle={styles.addressBar}
         />
       )
     }
@@ -92,7 +120,6 @@ class Order extends PureComponent {
                          onChangeText={comment => this.setState({ comment })}
                   />
                 }
-                containerStyle={styles.addressBar}
       />
     )
   }
@@ -103,28 +130,43 @@ class Order extends PureComponent {
     if (isRated) {
       return (
         <ListItem title={
-                    <Input label="Rating:"
-                           value={String(rating.stars)}
-                           editable={false}
+                    <Rating showRating
+                            startingValue={rating.stars}
+                            readonly
+                            imageSize={30}
                     />
                   }
-                  containerStyle={styles.addressBar}
         />
       )
     }
 
     return (
       <ListItem title={
-                  <Input placeholder='Rating(0-5)'
-                         label="Rating:"
-                         autoCapitalize="none"
-                         value={this.state.stars}
-                         onChangeText={stars => this.setState({ stars })}
+                  <Rating ratingCount={5}
+                          fractions={0}
+                          startingValue={this.state.stars}
+                          imageSize={30}
+                          onFinishRating={stars => this.setState({ stars })}
+                          showRating
                   />
                 }
-                containerStyle={styles.addressBar}
       />
     )
+  }
+
+  renderCancelButton = (isRated) => {
+    const { isCanceling } = this.state
+    if (!isRated) {
+      return (
+        <Button title="CANCEL"
+                buttonStyle={[styles.button, styles.cancelButton]}
+                titleStyle={styles.buttonTitle}
+                loading={isCanceling}
+                disabled={isCanceling}
+                onPress={this.cancel}
+        />
+      )
+    }
   }
 
   render () {
@@ -141,32 +183,13 @@ class Order extends PureComponent {
       restaurant
     } = this.props.order
 
+    const isCanceled = status === 2
     const isRated = status !== 0
-    const buttonTitle = isRated ? 'RATED' : 'RATE'
-    // orderFoods {
-    //   quantity
-    //   food {
-    //     id
-    //     name
-    //     price
-    //     thumbnail
-    //   }
-    // }
-    // restaurant {
-    //   id
-    //   name
-    //   thumbnail
-    // }
+    const rateTitle = isRated ? 'RATED' : 'RATE'
 
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.container}>
         <ScrollView>
-          <FlatList data={orderFoods}
-                    renderItem={this.renderItem}
-                    keyExtractor={({ food }) => food.id}
-                    // ListEmptyComponent={}
-                    // ItemSeparatorComponent={}
-          />
           <ListItem title={
                       <Input value={address.full}
                              label="Address:"
@@ -175,20 +198,30 @@ class Order extends PureComponent {
                     }
                     rightTitle={`Total: $ ${price}`}
                     rightSubtitle={`x ${quantity}`}
-                    containerStyle={styles.addressBar}
           />
-          {this.renderComments(isRated)}
-          {this.renderRating(isRated)}
-          <View style={styles.buttonContainer}>
-            <Button title={buttonTitle}
-                    buttonStyle={styles.buttonStyle}
-                    titleStyle={styles.titleStyle}
-                    loading={isLoading}
-                    disabledStyle={styles.disabledButtonStyle}
-                    disabled={isRated || isLoading}
-                    onPress={this.rate}
-            />
-          </View>
+          <FlatList data={orderFoods}
+                    renderItem={this.renderItem}
+                    keyExtractor={({ food }) => food.id}
+                    // ListEmptyComponent={}
+                    // ItemSeparatorComponent={}
+          />
+          {!isCanceled
+            && <View>
+              {this.renderComments(isRated)}
+              {this.renderRating(isRated)}
+              <View style={styles.buttonContainer}>
+                <Button title={rateTitle}
+                        buttonStyle={styles.button}
+                        titleStyle={styles.buttonTitle}
+                        loading={isLoading}
+                        disabledStyle={styles.disabledButton}
+                        disabled={isRated || isLoading}
+                        onPress={this.rate}
+                />
+                {this.renderCancelButton(isRated)}
+              </View>
+            </View>
+          }
         </ScrollView>
       </SafeAreaView>
     )
@@ -196,29 +229,34 @@ class Order extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 20
+  },
   title: {
     fontWeight: 'bold',
     fontSize: 18
-  },
-  addressBar: {
-    backgroundColor: 'transparent'
   },
   buttonContainer: {
     alignItems: 'center',
     marginVertical: 30
   },
-  titleStyle: {
+  buttonTitle: {
     fontWeight: 'bold',
     color: 'white'
   },
-  buttonStyle: {
+  button: {
     height: 50,
     width: 200,
     backgroundColor: '#000',
     borderRadius: 30
   },
-  disabledButtonStyle: {
+  disabledButton: {
     backgroundColor: 'rgba(0,0,0,0.2)',
+  },
+  cancelButton: {
+    marginTop: 10,
+    backgroundColor: 'rgba(0,0,0,0.5)'
   }
 })
 

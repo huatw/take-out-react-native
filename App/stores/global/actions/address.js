@@ -1,11 +1,11 @@
 import { addressAPI } from '../graphql'
 
-const update = async ([longitude, latitude]) => {
-  // const { address } = await addressAPI.fetch({ longitude, latitude })
+const update = async (gps) => {
+  // const { address } = await addressAPI.fetch(gps)
   // return { address }
 
   // fake data
-  return { address: { full: 'howe center ..', gps: [longitude, latitude] } }
+  return { address: { full: 'new york ..', gps } }
 }
 
 export default {

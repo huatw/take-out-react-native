@@ -4,6 +4,7 @@ import { ListItem, Icon } from 'react-native-elements'
 
 import withSearchBar from '../../../hoc/withSearchBar'
 import { consume } from '../../../stores'
+import { IMAGE_URL } from '../../../config'
 
 import ListView from '../ListView'
 
@@ -33,7 +34,7 @@ class SearchRestaurant extends PureComponent {
               subtitle={item.cuisine}
               subtitleStyle={styles.subtitle}
               leftAvatar={{
-                source: { uri: item.thumbnail },
+                source: { uri: `${IMAGE_URL}${item.thumbnail}` },
                 large: true,
                 rounded: false,
                 containerStyle: { margin: 15 },

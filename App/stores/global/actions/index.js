@@ -6,7 +6,7 @@ import foodActions from './food'
 import ratingActions from './rating'
 import restaurantActions from './restaurant'
 import cartActions from './cart'
-
+import contactActions from './contact'
 
 const actions = {
   sessionActions,
@@ -16,7 +16,8 @@ const actions = {
   foodActions,
   ratingActions,
   restaurantActions,
-  cartActions
+  cartActions,
+  contactActions
 }
 
 export default actions
