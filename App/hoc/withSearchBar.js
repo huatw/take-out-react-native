@@ -1,6 +1,11 @@
 import React, { PureComponent } from 'react'
-import { SafeAreaView, StyleSheet } from 'react-native'
 import { SearchBar } from 'react-native-elements'
+import styled from 'styled-components'
+
+const StyledSafeAreaView = styled.SafeAreaView`
+  flex: 1
+  marginTop: 20
+`
 
 const withSearchBar = (placeholder = 'Search...', cb) => Wrapped =>
 class extends PureComponent {
@@ -33,13 +38,13 @@ class extends PureComponent {
 
   render () {
     return (
-      <SafeAreaView style={styles.container}>
+      <StyledSafeAreaView>
         <SearchBar value={this.state.search}
                    platform="ios"
                    placeholder={placeholder}
                    autoFocus
                    autoCapitalize="none"
-                   containerStyle={styles.containerStyle}
+                   containerStyle={{ backgroundColor: 'transparent' }}
                    showLoading={this.state.isLoading}
                    onChangeText={this.changeText}
                    onClear={this.clearText}
@@ -49,19 +54,9 @@ class extends PureComponent {
         <Wrapped {...this.props}
                  {...this.state}
         />
-      </SafeAreaView>
+      </StyledSafeAreaView>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 20,
-  },
-  containerStyle: {
-    backgroundColor: 'transparent'
-  }
-})
 
 export default withSearchBar

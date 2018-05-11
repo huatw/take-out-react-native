@@ -1,9 +1,28 @@
 import React, { PureComponent } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Icon, Input, Button } from 'react-native-elements'
 import { withNavigation } from 'react-navigation'
+import styled from 'styled-components'
 
 import { consume } from '../../stores'
+
+const StyledContainerView = styled.View`
+  flex: 1
+  align-items: center
+`
+
+const StyledFormView = styled.View`
+  flex: 1
+  width: 90%
+  align-items: center
+  justify-content: center
+`
+
+const StyledButtonView = styled.View`
+  flex: 1
+  align-items: center
+  justify-content: center
+`
 
 @withNavigation
 @consume(
@@ -62,8 +81,8 @@ class Login extends PureComponent {
     } = this.state
 
     return (
-      <View style={styles.container}>
-        <View style={styles.form}>
+      <StyledContainerView>
+        <StyledFormView>
           <Input placeholder="Username"
                  autoCapitalize="none"
                  autoCorrect={false}
@@ -89,8 +108,8 @@ class Login extends PureComponent {
                  errorStyle={styles.errorStyle}
                  errorMessage={passwordError}
           />
-        </View>
-        <View style={styles.buttonContainer}>
+        </StyledFormView>
+        <StyledButtonView>
           <Button title="LOG IN"
                   buttonStyle={styles.buttonStyle}
                   titleStyle={styles.titleStyle}
@@ -99,34 +118,19 @@ class Login extends PureComponent {
                   disabled={isLoading}
                   onPress={this.login}
           />
-        </View>
-      </View>
+        </StyledButtonView>
+      </StyledContainerView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center'
-  },
-  form: {
-    flex: 1,
-    width: '90%',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   inputContainerStyle: {
     marginVertical: 10
   },
   errorStyle: {
     textAlign: 'center',
     fontSize: 14
-  },
-  buttonContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start'
   },
   titleStyle: {
     fontWeight: 'bold',

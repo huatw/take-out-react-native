@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text } from 'react-native'
 
 class Setting extends PureComponent {
   render () {
@@ -10,11 +10,5 @@ class Setting extends PureComponent {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-})
 
 export default Setting

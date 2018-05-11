@@ -13,7 +13,6 @@ const init = (id) => ({ cart }) => {
   }
 }
 
-
 const inc = (food, id) => ({ cart }) => {
   const oldCart = cart[id]
   const oldFood = oldCart.foods[food.id]
@@ -41,7 +40,7 @@ const inc = (food, id) => ({ cart }) => {
 const dec = (food, id) => ({ cart }) => {
   const oldCart = cart[id]
   const oldFood = oldCart.foods[food.id]
-  const newFood = { food, quantity: oldFood.quantity - 1}
+  const newFood = { food, quantity: oldFood.quantity - 1 }
 
   const newCart = {
     price: oldCart.price - food.price,

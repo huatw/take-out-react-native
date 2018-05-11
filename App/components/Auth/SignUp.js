@@ -1,9 +1,28 @@
 import React, { PureComponent } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Icon, Text, Input, Button } from 'react-native-elements'
 import { withNavigation } from 'react-navigation'
+import styled from 'styled-components'
 
 import { consume } from '../../stores'
+
+const StyledContainerView = styled.View`
+  flex: 1
+  align-items: center
+`
+
+const StyledFormView = styled.View`
+  flex: 1
+  width: 90%
+  align-items: center
+  justify-content: center
+`
+
+const StyledButtonView = styled.View`
+  flex: 1
+  align-items: center
+  justify-content: flex-start
+`
 
 @withNavigation
 @consume(
@@ -56,7 +75,6 @@ class SignUp extends PureComponent {
     }
   }
 
-
   render() {
     const {
       username,
@@ -69,8 +87,8 @@ class SignUp extends PureComponent {
     } = this.state
 
     return (
-      <View style={styles.container}>
-        <View style={styles.form}>
+      <StyledContainerView>
+        <StyledFormView>
           <Input placeholder="Username"
                  autoCapitalize="none"
                  autoCorrect={false}
@@ -108,8 +126,8 @@ class SignUp extends PureComponent {
                  errorStyle={styles.errorStyle}
                  errorMessage={passwordError}
           />
-        </View>
-        <View style={styles.buttonContainer}>
+        </StyledFormView>
+        <StyledButtonView>
           <Button title="SIGN UP"
                   buttonStyle={styles.buttonStyle}
                   titleStyle={styles.titleStyle}
@@ -118,34 +136,19 @@ class SignUp extends PureComponent {
                   disabled={isLoading}
                   onPress={this.register}
           />
-        </View>
-      </View>
+        </StyledButtonView>
+      </StyledContainerView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center'
-  },
-  form: {
-    flex: 1,
-    width: '90%',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   inputContainerStyle: {
     marginVertical: 10
   },
   errorStyle: {
     textAlign: 'center',
     fontSize: 14
-  },
-  buttonContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start'
   },
   titleStyle: {
     fontWeight: 'bold',
@@ -158,7 +161,7 @@ const styles = StyleSheet.create({
     borderRadius: 30
   },
   disabledButtonStyle: {
-    backgroundColor: 'rgba(0,0,0,0.2)',
+    backgroundColor: 'rgba(0,0,0,0.2)'
   }
 })
 

@@ -14,10 +14,10 @@ const requireGPS = (propMapper, actionMapper) => Wrapped => class extends PureCo
   getGPS = () => {
     navigator.geolocation.getCurrentPosition(
       ({ coords: { latitude, longitude } }) => {
-        actionMapper(this.props)([latitude, longitude])
+        actionMapper(this.props)(latitude, longitude)
       },
       err => {
-        actionMapper(this.props)([])
+        actionMapper(this.props)()
         console.log('connect failed', err)
       }
     )

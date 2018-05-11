@@ -1,5 +1,9 @@
 import React from 'react'
-import { ActivityIndicator, StyleSheet } from 'react-native'
+import styled from 'styled-components'
+
+const StyledActivityIndicator = styled.ActivityIndicator`
+  margin-top: 100
+`
 
 const withLoader = check => Wrapped => class extends Wrapped {
   static displayName = `withLoader(${Wrapped.displayName || Wrapped.name})`
@@ -11,12 +15,8 @@ const withLoader = check => Wrapped => class extends Wrapped {
   render () {
     return check(this.props, this.state)
       ? super.render()
-      : <ActivityIndicator size="large" style={styles.loadding}/>
+      : <StyledActivityIndicator size="large" />
   }
 }
-
-const styles = StyleSheet.create({
-  loadding: { marginTop: 100 }
-})
 
 export default withLoader

@@ -1,16 +1,22 @@
 import React, { PureComponent } from 'react'
-import { SafeAreaView, StyleSheet } from 'react-native'
-import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
+import { StyleSheet } from 'react-native'
+import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view'
+import styled from 'styled-components'
 
 import Login from './Login'
 import SignUp from './SignUp'
 
+const StyledSafeAreaView = styled.SafeAreaView`
+  flex: 1
+  marginTop: 20
+`
+
 class Auth extends PureComponent {
-  render() {
+  render () {
     return (
-      <SafeAreaView style={styles.container}>
+      <StyledSafeAreaView>
         <ScrollableTabView
-          renderTabBar={() => <DefaultTabBar/> }
+          renderTabBar={() => <DefaultTabBar />}
           tabBarUnderlineStyle={styles.tabBarUnderlineStyle}
           // tabBarBackgroundColor='#FFFFFF'
           tabBarActiveTextColor='#000'
@@ -19,16 +25,12 @@ class Auth extends PureComponent {
           <Login tabLabel="Login" />
           <SignUp tabLabel="Sign up" />
         </ScrollableTabView>
-      </SafeAreaView>
+      </StyledSafeAreaView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 20
-  },
   tabBarUnderlineStyle: {
     backgroundColor: '#000',
     height: 2
@@ -36,8 +38,8 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: 18,
     textAlign: 'center',
-    padding: 10,
-  },
+    padding: 10
+  }
 })
 
 export default Auth

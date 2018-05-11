@@ -1,7 +1,7 @@
 import { orderAPI } from '../graphql'
 
 const searchList = (keyword) => ({ orders }) => {
-  const orderSearch = orders.filter(({ restaurant: { name } }) => name.includes(keyword) )
+  const orderSearch = orders.filter(({ restaurant: { name } }) => name.includes(keyword))
 
   return { orderSearch }
 }
@@ -23,7 +23,6 @@ const fetchList = async () => {
 }
 
 const create = (restaurantId, full) => async ({ cart, orders, address }) => {
-
   const { foods, quantities } = Object
     .values(cart[restaurantId].foods)
     .reduce(

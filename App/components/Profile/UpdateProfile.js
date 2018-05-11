@@ -1,8 +1,27 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Icon, Input, Button } from 'react-native-elements'
+import styled from 'styled-components'
 
 import { consume } from '../../stores'
+
+const StyledContainerView = styled.View`
+  flex: 1
+  align-items: center
+`
+
+const StyledFormView = styled.View`
+  flex: 1
+  width: 90%
+  align-items: center
+  justify-content: center
+`
+
+const StyledButtonView = styled.View`
+  flex: 1
+  align-items: center
+  justify-content: flex-start
+`
 
 @consume(
   'session',
@@ -55,8 +74,8 @@ class UpdateProfile extends PureComponent {
     const { value, valueError, isLoading } = this.state
 
     return (
-      <View style={styles.container}>
-        <View style={styles.form}>
+      <StyledContainerView>
+        <StyledFormView>
           <Input placeholder={navigation.getParam('title')}
                  autoFocus
                  autoCapitalize="none"
@@ -65,50 +84,35 @@ class UpdateProfile extends PureComponent {
                  onChangeText={value => this.setState({ value })}
                  value={value}
                  leftIcon={ <Icon name="person" size={25} /> }
-                 containerStyle={styles.inputContainerStyle}
+                 containerStyle={styles.inputContainer}
                  errorStyle={styles.errorStyle}
                  errorMessage={valueError}
           />
-        </View>
-        <View style={styles.buttonContainer}>
+        </StyledFormView>
+        <StyledButtonView>
           <Button title="UPDATE"
                   buttonStyle={styles.buttonStyle}
-                  titleStyle={styles.titleStyle}
+                  titleStyle={styles.buttonTitle}
                   loading={isLoading}
                   disabledStyle={styles.disabledButtonStyle}
                   disabled={isLoading}
                   onPress={this.update}
           />
-        </View>
-      </View>
+        </StyledButtonView>
+      </StyledContainerView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center'
-  },
-  form: {
-    flex: 1,
-    width: '90%',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  inputContainerStyle: {
+  inputContainer: {
     marginVertical: 10
   },
   errorStyle: {
     textAlign: 'center',
     fontSize: 14
   },
-  buttonContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start'
-  },
-  titleStyle: {
+  buttonTitle: {
     fontWeight: 'bold',
     color: 'white'
   },

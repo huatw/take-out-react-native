@@ -1,7 +1,20 @@
 import React, { PureComponent } from 'react'
-import { SafeAreaView, View, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Icon, Text, Button } from 'react-native-elements'
 import { withNavigation } from 'react-navigation'
+import styled from 'styled-components'
+
+const StyledSafeAreaView = styled.SafeAreaView`
+  flex: 1
+  margin-top: 20
+  align-items: center
+  justify-content: center
+`
+
+const StyledView = styled.View`
+  align-items: center
+  margin-bottom: 50
+`
 
 const requireAuth = (check, runAuth) => Wrapped => class extends PureComponent {
   static displayName = `requireAuth(${Wrapped.displayName || Wrapped.name})`
@@ -25,31 +38,21 @@ class Auth extends PureComponent {
 
   render () {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.content}>
+      <StyledSafeAreaView>
+        <StyledView>
           <Text h4>Please Login to view page.</Text>
-        </View>
+        </StyledView>
         <Button title="LOG IN"
                 buttonStyle={styles.buttonStyle}
                 titleStyle={styles.titleStyle}
                 onPress={this.auth}
         />
-      </SafeAreaView>
+      </StyledSafeAreaView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 20,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  content: {
-    alignItems: 'center',
-    marginBottom: 50
-  },
   titleStyle: {
     fontWeight: 'bold',
     color: 'white'

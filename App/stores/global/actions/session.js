@@ -28,5 +28,5 @@ const logout = async () => {
 export default {
   fetch,
   login,
-  logout,
+  logout
 }

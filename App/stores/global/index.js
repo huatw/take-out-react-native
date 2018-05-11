@@ -36,8 +36,8 @@ const initialState = {
     createtime: '',
     updatetime: '',
     address: { full: '' },
-    foods: [], //id name cuisine price thumbnail
-    ratings: [], // restaurant ratings
+    foods: [], // id name cuisine price thumbnail
+    ratings: [] // restaurant ratings
   },
   cart: {}, // { restaurant_id: {} }
   food: {}, // food detail page
